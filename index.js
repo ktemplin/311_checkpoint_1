@@ -4,6 +4,7 @@ const port = process.env.PORT || 4000
 const bodyParser = require('body-parser')
 const users = require('./routes/users.js')
 
+app.use(bodyParser.json())
 app.use(users)
 app.use(express.static('public'))
 

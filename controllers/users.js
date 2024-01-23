@@ -1,4 +1,4 @@
-const users = require('./data/index.js')
+const users = require('../data/index.js')
 
 // listUsers
 const list = (req, res) => {
@@ -75,13 +75,14 @@ const update = (req, res) => {
 
 // deleteUser
 const remove = (req, res) => {
-    const found = users.some(user => user.id == req.params.id)
-    if (found){
-        const removeThis = users.filter(user => user.id == req.params.id)
-        users.splice(removeThis, 1);
-        res.send(users)
+    const userId = parseInt(req.params.id);
+    const userIndex = users.findIndex(u => u.id === userId);
+
+    if (userIndex !== -1) {
+        users.splice(userIndex, 1);
+        res.json({msg: "User Deleted Successfully: ", users});
     } else {
-        res.status(404).json({msg: `User id ${req.params.id} not found.`})
+        res.status(404).json({msg: "User cannot be found: ", users});
     }
 };
 // Should delete one user from the array based on its id
